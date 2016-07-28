@@ -73,9 +73,33 @@ client.on('connect', function(){
 client.on('message', function(topic, message){
 	var targetLight = lifxClient.findByLabel(topic.split("/").pop());
 
-	if(targetLight == null) return console.log("NO SUCH BULB FOUND");
-
-	targetLight[message.toString()]();	
+	if(targetLight == null) return;
+	
+	targetLight.getState(function(err, state){
+		switch(message.toString()){
+			case "on":
+				targetLight.on();
+				break;
+			case "off":
+				targetLight.off();
+				break;
+			case "white":
+				targetLight.color(0, 0, 100);
+				if(state.power == 0) targetLight.on();
+			case "red":
+				targetLight.color(0, 100, 100);
+				if(state.power == 0) targetLight.on();
+				break;
+			case "green":
+				targetLight.color(50, 50, 80);
+				if(state.power == 0) targetLight.on();
+				break;
+			case "blue":
+				targetLight.color(240, 100, 100);
+				if(state.power == 0) targetLight.on();
+				break;
+		}
+	});
 });
 
 client.on('close', function(){
