@@ -75,6 +75,29 @@ client.on('message', function(topic, message){
 
 	if(targetLight == null) return;
 	
+	var changeBrightness = function(light, currentState, change){
+		var brightness = currentState.color.brightness + change;
+		if(brightness > 100) brightness = 100;
+		if(brightness < 0)
+			light.off();
+		else{
+			light.color(currentState.color.hue, currentState.color.saturation, brightness, currentState.color.kelvin);
+			if(currentState.power == 0) light.on();
+		}
+	}
+	
+	var changeColor = function(light, currentState, hue, saturation, brightness, kelvin){
+		light.color(hue, saturation, currentState.color.brightness, brightness ? brightness : 100, kelvin ? kelvin : 3500);
+		if(currentState.power == 0) light.on();
+	}
+	
+	var changeWarmth = function(light, currentState, change){
+		var kelvin = currentState.color.kelvin + change;
+		if(kelvin > 9000) kelvin = 9000;
+		if(kelvin < 2500) kelvin = 2500;
+		light.color(currentState.color.hue, currentState.color.saturation, currentState.color.brightness, kelvin);
+	}
+	
 	targetLight.getState(function(err, state){
 		switch(message.toString()){
 			case "on":
@@ -84,19 +107,40 @@ client.on('message', function(topic, message){
 				targetLight.off();
 				break;
 			case "white":
-				targetLight.color(0, 0, 100);
-				if(state.power == 0) targetLight.on();
+				changeColor(targetLight, state, 0, 0);
+				break;
 			case "red":
-				targetLight.color(0, 100, 100);
-				if(state.power == 0) targetLight.on();
+				changeColor(targetLight, state, 0, 100);
 				break;
 			case "green":
-				targetLight.color(50, 50, 80);
-				if(state.power == 0) targetLight.on();
+				changeColor(targetLight, state, 142, 100, 65);
 				break;
 			case "blue":
-				targetLight.color(240, 100, 100);
-				if(state.power == 0) targetLight.on();
+				changeColor(targetLight, state, 240, 100);
+				break;
+			case "orange":
+				changeColor(targetLight, state, 45, 100, 65, 3500);
+				break;
+			case "purple":
+				changeColor(targetLight, state, 300, 100, 67);
+				break;
+			case "dimmer":
+				changeBrightness(targetLight, state, -10);
+				break;
+			case "muchdimmer":
+				changeBrightness(targetLight, state, -25);
+				break;
+			case "brighter":
+				changeBrightness(targetLight, state, 10);
+				break;
+			case "muchbrighter":
+				changeBrightness(targetLight, state, 25);
+				break;
+			case "warmer":
+				changeWarmth(targetLight, state, 1300);
+				break;
+			case "cooler":
+				changeWarmth(targetLight, state, -1300);
 				break;
 		}
 	});
