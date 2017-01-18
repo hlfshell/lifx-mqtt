@@ -21,3 +21,14 @@ This is a command line application, so you won't have to integrate it into anyth
 * **--on-bulb [prefix]** - If set, broadcast each bulb\'s connection, ie on bulb "AMERICA" connect, broadcast /heck/yeah/AMERICA
 * **--on-light-status [prefix]** - If set, will broadcast each bulb\'s status changes, ie on bulb "GOLIATH" discovery, /status/prefix/GOLIATH online
 * **--on-new-light [prefix]** - If set, will broadcast when a new bulb is discovered as well as the bulb\'s status change.
+
+#Vanilla node run example
+```shell
+$ npm install
+$ node index.js -b 192.168.0.255 -c 192.168.0.100 -P 1883 -s /home/lights
+```
+
+#Docker run example
+```shell
+$ docker run -d chrisns/lifx-mqtt -b 192.168.0.255 -c 192.168.0.100 -P 1883 -s /home/lights
+```
