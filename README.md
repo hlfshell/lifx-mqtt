@@ -11,7 +11,7 @@ npm install -g lifx-mqtt
 # How it works
 This is a command line application, so you won't have to integrate it into anything. Just execute it (or have it started on bootup) on some system and your bulbs will be connected to an MQTT network.
 
-#Command Line Options
+# Command Line Options
 
 * **-c, --host [host]** - Set host
 * **-P, --port [port]** - Set port
