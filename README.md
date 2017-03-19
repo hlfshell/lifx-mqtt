@@ -3,6 +3,11 @@ A node command line app that interfaces LIFX bulbs on the same network to an MQT
 
 LIFX bulbs work via UDP, which is cool but I wanted to tie them and other home automation stuff into a central MQTT server I run on a Raspberry Pi Zero at home. This is the solution to that.
 
+# Install
+```
+npm install -g lifx-mqtt
+```
+
 # How it works
 This is a command line application, so you won't have to integrate it into anything. Just execute it (or have it started on bootup) on some system and your bulbs will be connected to an MQTT network.
 

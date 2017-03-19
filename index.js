@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var command = require('commander');
 var Lifx = require('node-lifx').Client;
 var lifxClient = new Lifx();

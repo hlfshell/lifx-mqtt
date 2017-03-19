@@ -1,6 +1,6 @@
 {
   "name": "lifx-mqtt",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Connects lifx bulbs on the same network to an MQTT service automatically.",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,9 @@
     "lifx",
     "mqtt"
   ],
+  "bin":{
+    "lifx-mqtt": "./index.js"
+  },
   "author": {
     "name": "Keith Chester",
     "email": "kchester@gmail.com"
